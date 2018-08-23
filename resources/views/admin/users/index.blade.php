@@ -1,13 +1,56 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel adipisci autem voluptate sequi architecto necessitatibus. Voluptas nesciunt fugit harum expedita accusamus ipsa non reprehenderit amet est? Dicta ducimus labore ratione?
-    </p>
-</body>
-</html>
+
+@extends('layouts.admin')
+
+
+
+
+@section('content')
+
+    <h1>Users</h1>
+
+    <table class="table">
+        
+        <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Updated</th>
+        </thead>
+
+        <tbody>
+            @if($users)
+
+                @foreach ($users as $user)
+                    
+                    <tr>
+                        <td>{{ $user->id }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->role['name'] }}</td>
+                        <td>
+                            
+                            @if ($user->is_active == 1)
+                                
+                                {{ "Active" }}
+                            
+                            @elseif($user->is_active == 0)
+
+                                {{ "Inactive" }}
+                            
+                            @endif
+
+                        </td>
+                        <td>{{ $user->created_at->diffForHumans() }}</td>
+                        <td>{{ $user->updated_at->diffForHumans() }}</td>
+                    </tr>
+
+                @endforeach
+
+            @endif
+        </tbody>
+    </table>
+
+@stop
