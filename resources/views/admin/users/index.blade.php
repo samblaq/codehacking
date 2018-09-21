@@ -2,8 +2,6 @@
 @extends('layouts.admin')
 
 
-
-
 @section('content')
 
     <h1>Users</h1>
@@ -12,6 +10,7 @@
         
         <thead>
             <th>ID</th>
+            <th>Photo</th>
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
@@ -22,17 +21,19 @@
 
         <tbody>
             @if($users)
-
+               
+                {{--  {{ HTML::image($user->photo, '', array('class' => 'image')); }}  --}}
                 @foreach ($users as $user)
                     
                     <tr>
                         <td>{{ $user->id }}</td>
-                        <td>{{ $user->name }}</td>
+                        <td><img src="{{ $user->photo->file }}" alt="" height="50" width="50"> </td>
+                        <td> <a href="{{ route('users.edit', $user->id) }}">{{ $user->name }}</a> </td>
                         <td>{{ $user->email }}</td>
-                        <td>{{ $user->role['name'] }}</td>
+                        <td>{{ $user->role ? $user->role['name'] : 'User has no role' }}</td>
                         <td>
                             
-                            @if ($user->is_active == 1)
+                            @if ($user->is_active == 1) 
                                 
                                 {{ "Active" }}
                             
